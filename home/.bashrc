@@ -59,8 +59,6 @@ include "screen"
 
 ############ Shared
 
-## Homesick
-alias homesickdir="cd ~/.homesick/repos/home"
 
 ## RVM - Ruby Version Manager
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # Load RVM function

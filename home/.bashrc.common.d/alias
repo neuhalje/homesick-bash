@@ -1,3 +1,6 @@
 # vim: filetype=sh:
 alias gti=git
 
+## Homesick
+alias homesickdir="cd ~/.homesick/repos/"
+
