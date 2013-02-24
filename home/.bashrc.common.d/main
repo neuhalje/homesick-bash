@@ -1,0 +1,54 @@
+# vim: ft=sh :
+
+#########################
+# Colorizing
+#
+#
+# See "colors"
+# The following colors can be used:
+#
+# Regular text:
+#   SOL_EMPH  -- emphasized
+#   SOL_BODY_TXT -- normal body text
+#   SOL_COMMENT -- comments
+# Spot colors
+#   SOL_RED
+#   SOL_MAGENTA
+#   SOL_VIOLET
+#   SOL_BLUE
+#   SOL_CYAN
+#   SOL_GREEN
+
+# The background as configured by the terminal client is
+# 'DARK' or 'LIGHT'
+# Try to set the terminal colors to: http://ethanschoonover.com/solarized
+# 256 color terminals are a must.
+# MacOSX: Use iTerm2
+COLOR_BG_IS='DARK'
+
+# The color of the username in the prompt
+PROMPT_ROOT_COLOR=${SOL_RED}
+PROMPT_NON_ROOT_COLOR=${SOL_EMPH}
+
+# The color of the hostname
+PROMPT_HOST_COLOR=${SOL_EMPH}
+
+# The color of the current working directory in the prompt
+PROMPT_CWD_COLOR=${SOL_BODY_TXT}
+
+
+# courtesy of http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
+SCRIPT_PATH="${BASH_SOURCE[0]}";
+if ([ -h "${SCRIPT_PATH}" ]) then
+  while([ -h "${SCRIPT_PATH}" ]) do SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
+fi
+pushd . > /dev/null
+cd `dirname ${SCRIPT_PATH}` > /dev/null
+SCRIPT_PATH=`pwd`;
+popd  > /dev/null
+
+
+for SRC in "${SCRIPT_PATH}"/*.inc
+do
+  source "$SRC"
+done

@@ -1,0 +1,12 @@
+# vim: set ft=sh:
+export TERM=xterm-256color
+
+LANG="en_US.UTF-8"
+export LANG
+
+
+export JAVA_HOME=/opt/java/jdk1.7.0_07
+export PATH=${JAVA_HOME}/bin:${PATH}
+
+# Make screen find the terminal defs
+#export TERMINFO=/usr/gnu/share/terminfo

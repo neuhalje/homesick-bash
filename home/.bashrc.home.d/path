@@ -1,0 +1,5 @@
+## vim: set ft=sh :
+#### Solaris
+export MANPATH=$MANPATH:/usr/dtrace/DTT/Man
+PATH=/usr/sbin:/usr/gnu/bin:$PATH:/usr/dtrace/DTT/Bin
+PATH=$PATH:/home/jens/opt/byobu/bin

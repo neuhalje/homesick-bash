@@ -1,0 +1,4 @@
+#export TERM=xterm-color
+
+# Make screen find the terminal defs
+export TERMINFO=/usr/gnu/share/terminfo

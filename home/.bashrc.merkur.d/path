@@ -1,0 +1,16 @@
+#### MacOSX
+
+export PATH=$PATH:/Users/jens/bin
+
+#JAVA
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Home
+
+# GROOVY
+#export GROOVY_HOME=/Users/jens/Library/Groovy/current
+#export PATH=${PATH}:${GROOVY_HOME}/bin
+
+# Custom ruby
+# RVM macht es export PATH=${PATH}:/Users/jens/.gem/ruby/1.8/bin
+
+# MacPorts
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH

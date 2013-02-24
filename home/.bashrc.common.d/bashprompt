@@ -1,0 +1,123 @@
+# vim: ft=sh :
+function ps1_svn_prompt()
+{
+if [ -d .svn ]; then
+  local PS1_SVN=" ${SOL_GREEN}[svn: ${SOL_GREEN}$(svn info | grep ^Revision | sed s/^Revision:[\s]\*//)${SOL_GREEN}]${NO_COLOUR}"
+
+  if [ $? -eq 0 ];
+  then
+    echo -n ${PS1_SVN}
+  fi
+fi
+}
+
+# Returns "|unmerged:N" where N is the number of unmerged local and remote
+# branches (if any).
+function parse_git_unmerged {
+  local unmerged=`expr $(git branch --no-color -a --no-merged  2>/dev/null| wc -l)` 
+  if [ "${unmerged}" != "0" ]
+  then
+    echo "|unmerged:${unmerged}"
+  fi
+}
+
+function ps1_git_prompt()
+{
+  git rev-parse --git-dir &> /dev/null || return
+# Parsing non-porcelain is not good
+  git_status="$(git status 2> /dev/null)"
+  branch_pattern="^# On branch ([^${IFS}]*)"
+  remote_pattern="# Your branch is (ahead|behind).*by ([[:digit:]]*) commit"
+  diverge_pattern="# Your branch and (.*) have diverged"
+  diverged_remote_pattern="# and have ([[:digit:]]*) and ([[:digit:]]*) different commit(s) each, respectively."
+  changed_pattern_1="# Changed but not updated:"
+  changed_pattern_2="# Changes not staged for commit:"
+  untracked_pattern="# Untracked files:"
+  has_index_pattern="# Changes to be committed:"
+
+	  if [[  ${git_status} =~ "${has_index_pattern}" ]]; then
+	    HAS_INDEX="${SOL_YELLOW}I"
+    fi
+	  if [[  ${git_status} =~ "${untracked_pattern}" ]]; then
+	    UNTRACKED="${SOL_EMPH}?"
+    fi
+	  if [[  ${git_status} =~ "${changed_pattern_1}" ||  ${git_status} =~ "${changed_pattern_2}"  ]]; then
+	    MODIFIED_TRACKED="${SOL_RED}*"
+    fi
+
+  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    if [[ ${git_status} =~ ${diverge_remote_pattern} ]]; then
+        AHEAD="|ahead:${BASH_REMATCH[1]}|behind:${BASH_REMATCH[2]}"
+    else
+        # in case the format has changed, at least print 'diverged'
+        AHEAD="|diverged"
+    fi
+  else # not diverged
+      if [[ ${git_status} =~ ${remote_pattern} ]]; then
+        if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+            AHEAD="|ahead:${BASH_REMATCH[2]}"
+        else
+            AHEAD="|behind:${BASH_REMATCH[2]}"
+        fi
+      fi
+  fi
+
+  if [[ ${git_status} =~ ${branch_pattern} ]]; then
+    BRANCH=${BASH_REMATCH[1]}
+  fi
+
+  echo -n " ${SOL_COMMENT}[${SOL_GREEN}${BRANCH}${MODIFIED_TRACKED}${HAS_INDEX}${UNTRACKED}${SOL_BODY_TXT}${UNMERGED}${AHEAD}${SOL_COMMENT}]${NO_COLOUR}"
+}
+
+
+function ps1_user_name()
+{
+  case $EUID in
+   0) echo ${PROMPT_ROOT_COLOR}\\u
+      ;;
+   *) echo ${PROMPT_NON_ROOT_COLOR}\\u
+      ;;
+  esac
+}
+
+
+PREVPWD=`pwd`
+handle_virtualenv(){
+  if [ "$PWD" != "$PREVPWD" ]; then
+    PREVPWD="$PWD";
+    if [ -n "$PREVENV_PATH" ]; then
+      if [ "`echo "$PWD" | grep -c $PREVENV_PATH`" = "0"  ]; then
+         source $PREVENV_PATH/.venv
+         echo "> Virtualenv `basename $VIRTUALENV_PATH` deactivated"
+         PS1=$PREV_PS1
+         PATH=$PREV_PATH
+         PREVENV_PATH=
+      fi
+    fi
+    # activate virtualenv dynamically
+    if [ -e "$PWD/.venv" ] && [ "$PWD" != "$PREVENV_PATH" ]; then
+      PREV_PS1="$PS1"
+      PREV_PATH="$PATH"
+      PREVENV_PATH="$PWD"
+      source $PWD/.venv
+      source $VIRTUALENV_PATH/bin/activate
+      echo "> Virtualenv `basename $VIRTUALENV_PATH` activated"
+    fi
+  fi
+}
+
+function ps1_python_virtualenv_prompt(){
+   if [ -d "$VIRTUAL_ENV" ]
+   then
+      VENV=$(basename $VIRTUAL_ENV)
+      echo -n "${SOL_COMMENT}(venv:${SOL_GREEN}${VENV}${SOL_COMMENT}) "
+   fi
+}
+
+function shell_colored {
+   #PS1="${LIGHT_GRAY}\h:${GRAY}\w ${LIGHT_GRAY}[$(ps1_user_name)${LIGHT_GRAY}]$(ps1_git_prompt)$(ps1_svn_prompt)${NO_COLOUR}:"
+   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)$(ps1_svn_prompt)${NO_COLOUR} "
+}
+PROMPT_COMMAND=shell_colored
+
+
