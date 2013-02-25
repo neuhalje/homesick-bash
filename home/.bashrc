@@ -20,6 +20,13 @@ bashrc_determine_os
 
 export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
 
+
+function bashrc_debug()
+{
+     local -i DEBUG=1
+     [[ $DEBUG -eq 1 ]] &&  echo $*
+}
+
 function include_plugin()
 {
      local plugin_dir_name=$1
@@ -33,6 +40,7 @@ function include_plugin()
      local COMMON=${COMMON_BASHRC_PREFIX}/${path}
      if [ -e  ${COMMON} ]
      then
+         bashrc_debug include ${COMMON}
          . ${COMMON}
      fi
 
@@ -41,6 +49,7 @@ function include_plugin()
      local OS_SPECIFIC=${OS_BASHRC_PREFIX}/${path}
      if [ -e  ${OS_SPECIFIC} ]
      then
+         bashrc_debug include ${OS_SPECIFIC}
          . ${OS_SPECIFIC}
      fi
 
@@ -49,6 +58,7 @@ function include_plugin()
      local OS_DISTRO_SPECIFIC=${OS_DISTRO_BASHRC_PREFIX}/${path}
      if [ -e  ${OS_DISTRO_SPECIFIC} ]
      then
+         bashrc_debug include ${OS_DISTRO_SPECIFIC}
          . ${OS_DISTRO_SPECIFIC}
      fi
 }
@@ -62,6 +72,7 @@ function include_home()
      local LOCAL=${LOCAL_BASHRC_PREFIX}/${path}
      if [ -e ${LOCAL} ]
      then
+         bashrc_debug include ${LOCAL}
          . ${LOCAL}
      fi
 }
@@ -80,9 +91,11 @@ function include_by_plugin_path()
   # expects e.g. ".bashrc-plugin.myplugin.d" as parameter
     local plugin_path_name=$1
     local plugin_name
-    [[ $plugin =~ ^[.]bashrc-plugin[.](.*)[.]d ]];  plugin_name=${BASH_REMATCH[1]}
+    [[ $plugin_path_name =~ ^[.]bashrc-plugin[.](.*)[.]d ]];  plugin_name=${BASH_REMATCH[1]}
 
-    include_plugin "${plugin}" "plugin.conf"
+    bashrc_debug include_by_plugin_path: \"$plugin_path_name\" is plugin \"$plugin_name\"
+
+    include_plugin "${plugin_path_name}" "plugin.conf"
     include_home "${plugin_name}.conf"
 }
 
@@ -91,11 +104,9 @@ function include_by_plugin_path()
 # ... and ignore same sucessive entries.
 export HISTCONTROL=ignoreboth
 
-
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
 
 # colors must be included before main
 include ".bashrc.os.d" "colors"
@@ -107,15 +118,10 @@ include ".bashrc.os.d" "exports"
 
 include ".bashrc.os.d" "bashprompt"
 
-include ".bashrc.os.d" "screen"
-
-
-
 for plugin_name in ~/.bashrc-plugin.*.d
 do
-    include_by_plugin_path $plugin_name
+    include_by_plugin_path $(basename $plugin_name)
 done
-
 
 ############ Shared
 

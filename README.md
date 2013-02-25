@@ -28,7 +28,6 @@ The files included are, in the following order:
 * ```exports```     -- Keep exports togehter
 
 * ```bashprompt```  -- *internal* Set up the bashprompt
-* ```screen```      -- *internal* see 'screen' below
 
 ### Plugins
 Plugins AKA other castles can hook into the sourcing lifecycle by provifing a file matching the glob ```~/.bashrc-plugin.*.d```. ```.bashrc``` will source the file ```plugin.conf``` according to the rules described above.
@@ -75,11 +74,6 @@ Variables
      * ```redhat```
      * ```suse```
 
-### Screen
-**TODO**: Move to screen castle
-
-* ```BASHRC_SCREEN_CONF_DIR``` - Directory for screen configurations. Defined in ```./.bashrc.common.d/screen```. *Exported*
-* ```BASHRC_SCREEN_CONF``` - A system (hostname) dependend screen configuration. If no system specific configuration is found: ```default.screenrc"```. Defined in ```./.bashrc.common.d/screen```. *Exported*
 
 
 Functions
