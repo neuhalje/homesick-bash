@@ -6,6 +6,52 @@ This is a [homesick](https://github.com/technicalpickles/homesick) _castle_ for 
 * [Solarized](http://ethanschoonover.com/solarized) color scheme
 * Tailored for Linux, Solaris, and MacOS. Preliminary support for SmartOS
 
+Usage
+------
+
+Use the repo with ```homesick```: 
+
+```bash
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-vim.git
+homesick symlink homesick-bash
+```
+
+**My castles**: ```homesickdir``` takes you to ```~/.homesick/repos/```.
+
+**Updating**: ```homesick_update``` automatically calls ```homesick pull``` and ```homesick symlink``` for all homesick castles in ```~/.homesick/repos/```.
+
+**Copy setup no new machine**: ```homesick_export``` prints instructions to do so, e.g.
+
+```bash
+$ homesick_export
+
+# homesick-bash
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-bash.git
+homesick symlink homesick-bash
+
+# homesick-git
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-git.git
+homesick symlink homesick-git
+
+# homesick-mail-base
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-mail-base.git
+homesick symlink homesick-mail-base
+
+# homesick-mail-jens_home
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick-private/homesick-mail-jens_home.git
+homesick symlink homesick-mail-jens_home
+
+# homesick-screen
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-screen.git
+homesick symlink homesick-screen
+
+# homesick-vim
+homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-vim.git
+homesick symlink homesick-vim
+```
+
+
+
 Includes
 --------
 

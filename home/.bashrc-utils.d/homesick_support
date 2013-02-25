@@ -1,0 +1,37 @@
+# vim: set filetype=sh :
+
+alias homesickdir="cd ~/.homesick/repos/"
+
+function homesick_update()
+{
+    local castle
+    local castle_path
+
+    for castle_path in ~/.homesick/repos/*
+    do
+        castle=$(basename $castle_path)
+        echo "# $castle"
+        homesick pull ${castle}
+        homesick symlink ${castle}
+    done
+}
+
+function homesick_export()
+{
+    local castle
+    local castle_path
+    local git_url
+
+    pushd . >/dev/null
+    for castle_path in ~/.homesick/repos/*
+    do
+        castle=$(basename $castle_path)
+        cd $castle_path
+        git_url=$(git config --get remote.origin.url)
+        echo ""
+        echo "# $castle"
+        echo homesick clone $git_url; echo homesick symlink $castle
+    done
+    popd >/dev/null
+}
+

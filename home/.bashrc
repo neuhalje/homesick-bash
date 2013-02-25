@@ -15,7 +15,11 @@ export LC_CTYPE="en_US.UTF-8"
 # .bashrc.merkur.d/alias
 # .bashrc.merkur.d/path
 
-. ~/.bashrc-utils.d/detect_os
+for util in . ~/.bashrc-utils.d/*
+do
+ . $util
+done
+
 bashrc_determine_os
 
 export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
