@@ -100,7 +100,7 @@ case "${COLOR_BG_IS}" in
 esac
 
 # colorize the propmt
-if [ -e ~/.dir_colors ] && [ -n "$(which dircolors)" ]
+if [ -e ~/.dir_colors ] && [ -x "$(which dircolors)" ]
 then
     eval $(dircolors ~/.dir_colors)
 fi
