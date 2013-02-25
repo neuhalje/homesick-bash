@@ -1,3 +1,6 @@
+
+umask -S u=rwx,g=rx,o= >/dev/null
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
