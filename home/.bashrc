@@ -4,8 +4,8 @@ umask -S u=rwx,g=rx,o= >/dev/null
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-[ "x$ALREADY_CONFIGURED" = "xyes" ] && return
-export ALREADY_CONFIGURED="yes"
+[ "x$BASHRC_ALREADY_CONFIGURED" = "xyes" ] && return
+export BASHRC_ALREADY_CONFIGURED="yes"
 
 # Sometimes this is needed for UTF to work
 export LC_CTYPE="en_US.UTF-8"
@@ -14,8 +14,8 @@ export LC_CTYPE="en_US.UTF-8"
 # .bashrc.merkur.d/alias
 # .bashrc.merkur.d/path
 
-export HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
-LOCAL_BASHRC_PREFIX=~/.bashrc.${HOST_CONFIG}.d
+export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
+LOCAL_BASHRC_PREFIX=~/.bashrc.${BASHRC_HOST_CONFIG}.d
 COMMON_BASHRC_PREFIX=~/.bashrc.common.d
 
 function include()

@@ -1,11 +1,11 @@
 # vim: filetype=sh:
 
-export SCREEN_CONF_DIR="$HOME/.screen/configs"
-SCREEN_CONF="${HOST_CONFIG}.screenrc"  # -- or whatever you want
+export BASHRC_SCREEN_CONF_DIR="$HOME/.screen/configs"
+BASHRC_SCREEN_CONF="${BASHRC_HOST_CONFIG}.screenrc"  # -- or whatever you want
 
 if [ ! -f  "${SCREEN_CONF_DIR}/${SCREEN_CONF}" ]
 then
-  SCREEN_CONF="default.screenrc"
+  BASHRC_SCREEN_CONF="default.screenrc"
 fi
 
-export SCREEN_CONF
+export BASHRC_SCREEN_CONF
