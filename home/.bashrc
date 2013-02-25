@@ -4,6 +4,9 @@ umask -S u=rwx,g=rx,o= >/dev/null
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+[ "x$ALREADY_CONFIGURED" = "xyes" ] && return
+export ALREADY_CONFIGURED="yes"
+
 # Sometimes this is needed for UTF to work
 export LC_CTYPE="en_US.UTF-8"
 
