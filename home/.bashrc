@@ -20,14 +20,14 @@ bashrc_determine_os
 
 export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
 
-function include()
- {
-     local COMMON_BASHRC_PREFIX=~/.bashrc.os.d/common
+function include_plugin()
+{
+     local plugin_dir_name=$1
+     local path=$2
 
-     local DISTRO_BASHRC_PREFIX=~/.bashrc.os.d/${BASHRC_OS}-${BASHRC_OS_DISTRO}
+     local COMMON_BASHRC_PREFIX=~/${plugin_dir_name}/common
+     local DISTRO_BASHRC_PREFIX=~/${plugin_dir_name}/${BASHRC_OS}-${BASHRC_OS_DISTRO}
 
-     local LOCAL_BASHRC_PREFIX=~/.bashrc.${BASHRC_HOST_CONFIG}.d
-     path=$1
 
      # generic
      local COMMON=${COMMON_BASHRC_PREFIX}/${path}
@@ -51,14 +51,40 @@ function include()
      then
          . ${OS_DISTRO_SPECIFIC}
      fi
+}
+
+function include_home()
+{
+     local path=$1
 
      # Machine
+     local LOCAL_BASHRC_PREFIX=~/.bashrc.${BASHRC_HOST_CONFIG}.d
      local LOCAL=${LOCAL_BASHRC_PREFIX}/${path}
      if [ -e ${LOCAL} ]
      then
          . ${LOCAL}
      fi
- }
+}
+
+function include()
+{
+     local plugin_dir_name=$1
+     local path=$2
+
+     include_plugin $plugin_dir_name $path
+     include_home $path
+}
+
+function include_by_plugin_path()
+{
+  # expects e.g. ".bashrc-plugin.myplugin.d" as parameter
+    local plugin_path_name=$1
+    local plugin_name
+    [[ $plugin =~ ^[.]bashrc-plugin[.](.*)[.]d ]];  plugin_name=${BASH_REMATCH[1]}
+
+    include_plugin "${plugin}" "plugin.conf"
+    include_home "${plugin_name}.conf"
+}
 
 # don't put duplicate lines in the history. See bash(1) for more option
 # export HISTCONTROL=ignoredup
@@ -72,16 +98,23 @@ shopt -s checkwinsize
 
 
 # colors must be included before main
-include "colors"
+include ".bashrc.os.d" "colors"
 
-include "main"
-include "path"
-include "alias"
-include "exports"
+include ".bashrc.os.d" "main"
+include ".bashrc.os.d" "path"
+include ".bashrc.os.d" "alias"
+include ".bashrc.os.d" "exports"
 
-include "bashprompt"
+include ".bashrc.os.d" "bashprompt"
 
-include "screen"
+include ".bashrc.os.d" "screen"
+
+
+
+for plugin_name in ~/.bashrc-plugin.*.d
+do
+    include_by_plugin_path $plugin_name
+done
 
 
 ############ Shared

@@ -30,6 +30,10 @@ The files included are, in the following order:
 * ```bashprompt```  -- *internal* Set up the bashprompt
 * ```screen```      -- *internal* see 'screen' below
 
+### Plugins
+Plugins AKA other castles can hook into the sourcing lifecycle by provifing a file matching the glob ```~/.bashrc-plugin.*.d```. ```.bashrc``` will source the file ```plugin.conf``` according to the rules described above.
+
+
 ### Example
 
 On the system ```home``` which is an Ubuntu system, while sourcing ```.bashrc``` the following ```alias``` files are sourced in the following order (if they exist):
@@ -38,6 +42,13 @@ On the system ```home``` which is an Ubuntu system, while sourcing ```.bashrc```
 2 ```~/.bashrc.os.d/linux-common/alias```
 3 ```~/.bashrc.os.d/linux-debian/alias```
 4 ```~/.bashrc.home.d/alias```
+
+If a directory ```~/.bashrc-plugin.myplugin.d``` exists, then the following files would be sourced as well (if they exist):
+
+1 ```~/.bashrc-plugin.myplugin.d/common/plugin.conf```
+2 ```~/.bashrc-plugin.myplugin.d/linux-common/plugin.conf```
+3 ```~/.bashrc-plugin.myplugin.d/linux-debian/plugin.conf```
+4 ```~/.bashrc.home.d/myplugin.conf```
 
 
 Variables
@@ -76,3 +87,5 @@ Functions
 
 ### Internal
 * ```bashrc_determine_os``` defined in detect_os. Sets BASHRC_OS and BASHRC_OS_DISTRO.
+
+
