@@ -41,7 +41,7 @@ function bashrc_determine_os(){
         OS=`uname`
         if [ "${OS}" = "SunOS" ] ; then
             ARCH=`uname -p`
-            if [[ "${uname -v}" == joyent* ]] ; then
+            if [[ "$(uname -v)" == joyent* ]] ; then
                 OS=smartos
             else
                 OS=solaris
