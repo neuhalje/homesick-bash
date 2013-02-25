@@ -1,2 +1,0 @@
-alias gvim='open -a /Applications/MacVim.app '
-alias ls="ls -G"

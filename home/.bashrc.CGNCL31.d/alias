@@ -1,5 +1,0 @@
-alias ls="ls --color"
-alias worklog="cd ~jens/windows_shared/worklog"
-
-alias mvn='mvn3'
-

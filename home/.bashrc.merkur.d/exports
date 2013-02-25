@@ -1,7 +1,0 @@
-# make rvm work
-export CC=/opt/local/bin/gcc-apple-4.2
-
-
-export ANDROID_HOME=~/work/android-sdk-macosx
-export PATH=$PATH:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools
-
