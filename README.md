@@ -140,7 +140,9 @@ To make the shell more colorfull the castle provides some color-codes that can b
 
 ### Usage
 
- echo -e ${SOL_BODY_TXT} This is really ${SOL_RED}important${SOL_BODY_TXT}! ${SOL_EMPH}Listen to your color codes!${SOL_BODY_TXT}
+```bash
+ echo -e ${SOL_RED}red ${SOL_GREEN}green ${NO_COLOUR}blank ${SOL_EMPH}important ${SOL_BODY_TXT}normal ${SOL_COMMENT}unimportant
+```
 
 ### Codes
 
