@@ -10,32 +10,53 @@ BASHRC_ALREADY_CONFIGURED="yes"
 # Sometimes this is needed for UTF to work
 export LC_CTYPE="en_US.UTF-8"
 
+
 ############ Local
 # .bashrc.merkur.d/alias
 # .bashrc.merkur.d/path
 
+. ~/.bashrc-utils.d/detect_os
+bashrc_determine_os
+
 export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
-LOCAL_BASHRC_PREFIX=~/.bashrc.${BASHRC_HOST_CONFIG}.d
-COMMON_BASHRC_PREFIX=~/.bashrc.common.d
 
 function include()
  {
+     local COMMON_BASHRC_PREFIX=~/.bashrc.os.d/common
+
+     local DISTRO_BASHRC_PREFIX=~/.bashrc.os.d/${BASHRC_OS}-${BASHRC_OS_DISTRO}
+
+     local LOCAL_BASHRC_PREFIX=~/.bashrc.${BASHRC_HOST_CONFIG}.d
      path=$1
 
+     # generic
      local COMMON=${COMMON_BASHRC_PREFIX}/${path}
      if [ -e  ${COMMON} ]
      then
          . ${COMMON}
-#     else
-#         echo Skipping ${COMMON}
      fi
 
+     # OS
+     local OS_BASHRC_PREFIX=~/.bashrc.os.d/${BASHRC_OS}-common
+     local OS_SPECIFIC=${OS_BASHRC_PREFIX}/${path}
+     if [ -e  ${OS_SPECIFIC} ]
+     then
+         . ${OS_SPECIFIC}
+     fi
+
+     # OS - Distro
+     local OS_DISTRO_BASHRC_PREFIX=~/.bashrc.os.d/${BASHRC_OS}-${BASHRC_OS_DISTRO}
+     local OS_DISTRO_SPECIFIC=${OS_DISTRO_BASHRC_PREFIX}/${path}
+     if [ -e  ${OS_DISTRO_SPECIFIC} ]
+     then
+         . ${OS_DISTRO_SPECIFIC}
+     fi
+
+     # Machine
      local LOCAL=${LOCAL_BASHRC_PREFIX}/${path}
      if [ -e ${LOCAL} ]
      then
          . ${LOCAL}
-#     else
-#         echo Skipping ${LOCAL}
      fi
  }
 
