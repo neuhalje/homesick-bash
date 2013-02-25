@@ -18,6 +18,18 @@ The order and locations of the files are:
 3 ```~/.bashrc.os.d/${BASHRC_OS}-${BASHRC_OS_DISTRO}```
 4 ```~/.bashrc.${BASHRC_HOST_CONFIG}.d``` where BASHRC_HOST_CONFIG is the node name without the domain part.
 
+The files included are, in the following order:
+
+* ```colors```      -- *internal* create color tables
+
+* ```main```        -- set ```COLOR_BG_IS``` to either ```DARK``` or ```LIGHT```, dpendening on whether the terminal BG is light or dark
+* ```path```        -- Augement the path
+* ```alias```       -- Define ```alias```es.
+* ```exports```     -- Keep exports togehter
+
+* ```bashprompt```  -- *internal* Set up the bashprompt
+* ```screen```      -- *internal* see 'screen' below
+
 
 Variables
 ---------
