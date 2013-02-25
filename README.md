@@ -66,10 +66,9 @@ The order and locations of the files are:
 
 The files included are, in the following order:
 
-* ```bgcolor```     -- *internal* set ```COLOR_BG_IS``` to either ```DARK``` or ```LIGHT```, dpendening on whether the terminal BG is light or dark
+* ```bgcolor```     -- set ```COLOR_BG_IS``` to either ```DARK``` or ```LIGHT```, dpendening on whether the terminal BG is light or dark. *Default:* ```DARK```
 * ```colors```      -- *internal* create color tables
-
-* ```main```        -- 
+* ```main```        --~
 * ```path```        -- Augement the path
 * ```alias```       -- Define ```alias```es.
 * ```exports```     -- Keep exports togehter
@@ -133,4 +132,43 @@ Functions
 ### Internal
 * ```bashrc_determine_os``` defined in detect_os. Sets BASHRC_OS and BASHRC_OS_DISTRO.
 
+
+Colors
+--------
+
+To make the shell more colorfull the castle provides some color-codes that can be used in shell-scripts. For a description of the color codes see Ethan Schoonovers [Solarized page](http://ethanschoonover.com/solarized).
+
+### Usage
+
+ echo -e ${SOL_BODY_TXT} This is really ${SOL_RED}important${SOL_BODY_TXT}! ${SOL_EMPH}Listen to your color codes!${SOL_BODY_TXT}
+
+### Codes
+
+The following codes exist:
+
+**Text types**:
+* ```SOL_EMPH```      - Text with emphasis, depends on the value of ```COLOR_BG_IS```.
+* ```SOL_BODY_TXT```  - Normal text, depends on the value of ```COLOR_BG_IS```.
+* ```SOL_COMMENT```   - Comments (lighter), depends on the value of ```COLOR_BG_IS```.
+* ```NO_COLOUR```     - No color
+
+**Colors**:
+* ```SOL_YELLOW```
+* ```SOL_ORANGE```
+* ```SOL_RED```
+* ```SOL_MAGENTA```
+* ```SOL_VIOLET```
+* ```SOL_BLUE```
+* ```SOL_CYAN```
+* ```SOL_GREEN```
+
+**Solarized base colors** 
+* ```SOL_BASE03```
+* ```SOL_BASE02```
+* ```SOL_BASE01```
+* ```SOL_BASE00```
+* ```SOL_BASE0```
+* ```SOL_BASE1```
+* ```SOL_BASE2```
+* ```SOL_BASE3```
 
