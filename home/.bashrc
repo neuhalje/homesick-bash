@@ -15,7 +15,7 @@ export LC_CTYPE="en_US.UTF-8"
 # .bashrc.merkur.d/alias
 # .bashrc.merkur.d/path
 
-for util in . ~/.bashrc-utils.d/*
+for util in ~/.bashrc-utils.d/*
 do
  . $util
 done
