@@ -38,6 +38,17 @@ function homesick_export()
 
 function homesick_local_changes()
 {
+    local verbose=0
+
+    if [[ $# -eq 1 && "$1" == "-v" ]]; then
+        verbose=1
+    else
+        if [[ $# -gt 0 ]]; then
+            echo 'usage homesick_local_changes [-v]'
+            return
+        fi
+    fi
+
     echo Looking for local modifications in your castles...
 
     local castle
@@ -50,31 +61,40 @@ function homesick_local_changes()
     do
         castle=$(basename $castle_path)
         cd $castle_path
-        echo -e "${SOL_EMPH}* ${SOL_GREEN}$castle"
+        echo -e "${SOL_EMPH}* ${SOL_GREEN}$castle${NO_COLOUR}"
 
         # dirty
+        if [[ $verbose -eq 1 ]]; then
+            git diff-files 2>&1;
+        fi
         git diff-files --quiet >/dev/null 2>&1; changed=$?
+
         if test "$changed" = 0; then
            # nothing to do
            :
         else
              if test "$changed" = 1; then
-                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}changed ${SOL_COMMENT}files"
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}changed ${SOL_COMMENT}files${NO_COLOUR}"
             else
-                echo -e "${SOL_RED}- error from git diff-files\!"
+                echo -e "${SOL_RED}- error from git diff-files\!${NO_COLOUR}"
             fi
         fi
 
         # untracked
-        git ls-files --other --error-unmatch . >/dev/null 2>&1; untracked=$?
+        if [[ $verbose -eq 0 ]]; then
+            git ls-files --other --exclude-standard --error-unmatch . >/dev/null 2>&1; untracked=$?
+        else
+            git ls-files --other --exclude-standard --error-unmatch .  2>/dev/null; untracked=$?
+        fi
+
         if test "$untracked" = 1; then
            # nothing to do
            :
         else
             if test "$untracked" = 0; then
-                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}untracked ${SOL_COMMENT}files"
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}untracked ${SOL_COMMENT}files${NO_COLOUR}"
             else
-                echo -e "${SOL_RED}- error from ls-files\!"
+                echo -e "${SOL_RED}- error from ls-files\!${NO_COLOUR}"
             fi
         fi
     done

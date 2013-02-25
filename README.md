@@ -23,7 +23,7 @@ homesick symlink homesick-bash
 **Checking for local modifications**:
 
 ```bash
-$  homesick_local_changes
+$  homesick_local_changes  # also supports a -v flag
 Looking for local modifications in your castles...
 * homesick-bash
 - there are some changed files
