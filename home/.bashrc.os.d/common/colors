@@ -24,7 +24,6 @@ WHITE="\[\033[1;37m\]"
 
 # 256 color
 
-function EXT_COLOR () { echo -ne "\[\033[38;5;$1m\]"; }
 
 # http://ethanschoonover.com/solarized#usage-development
 # L*a*b values are canonical (White D65, Reference D50), other values are matched in sRGB space.
@@ -50,6 +49,7 @@ function EXT_COLOR () { echo -ne "\[\033[38;5;$1m\]"; }
 
 # Convert table into assigns (vim):
 # s/\v^# (\w+)(\s+\S+){3}\s+([0123456789]+).*$/SOL_\U\1=$(EXT_COLOR \3)/c
+function EXT_COLOR () { echo -n '\[\033[38;5;$1m\]'; }
 export SOL_BASE03=$(EXT_COLOR 234)
 export SOL_BASE02=$(EXT_COLOR 235)
 export SOL_BASE01=$(EXT_COLOR 240)
@@ -66,3 +66,63 @@ export SOL_VIOLET=$(EXT_COLOR 61)
 export SOL_BLUE=$(EXT_COLOR 33)
 export SOL_CYAN=$(EXT_COLOR 37)
 export SOL_GREEN=$(EXT_COLOR 64)
+
+# Colorize the Terminal
+
+case "${COLOR_BG_IS}" in
+  LIGHT)
+    SOL_EMPH=${SOL_BASE01}
+    SOL_BODY_TXT=${SOL_BASE00}
+    SOL_COMMENT=${SOL_BASE1}
+    ;;
+  DARK)
+    SOL_EMPH=${SOL_BASE1}
+    SOL_BODY_TXT=${SOL_BASE0}
+    SOL_COMMENT=${SOL_BASE01}
+    ;;
+    *)
+    echo -e ${SOL_RED}COLOR_BG_IS should be set to 'LIGHT' or 'DARK'. Actual value : \"${COLOR_BG_IS}\"
+    SOL_EMPH=${SOL_BASE1}
+    SOL_BODY_TXT=${SOL_BASE0}
+    SOL_COMMENT=${SOL_BASE01}
+    ;;  
+esac
+
+# for the prompt
+function PROMPT_EXT_COLOR () { echo -ne "\[\033[38;5;$1m\]"; }
+export PROMPT_SOL_BASE03=$(PROMPT_EXT_COLOR 234)
+export PROMPT_SOL_BASE02=$(PROMPT_EXT_COLOR 235)
+export PROMPT_SOL_BASE01=$(PROMPT_EXT_COLOR 240)
+export PROMPT_SOL_BASE00=$(PROMPT_EXT_COLOR 241)
+export PROMPT_SOL_BASE0=$(PROMPT_EXT_COLOR 244)
+export PROMPT_SOL_BASE1=$(PROMPT_EXT_COLOR 245)
+export PROMPT_SOL_BASE2=$(PROMPT_EXT_COLOR 254)
+export PROMPT_SOL_BASE3=$(PROMPT_EXT_COLOR 230)
+export PROMPT_SOL_YELLOW=$(PROMPT_EXT_COLOR 136)
+export PROMPT_SOL_ORANGE=$(PROMPT_EXT_COLOR 166)
+export PROMPT_SOL_RED=$(PROMPT_EXT_COLOR 160)
+export PROMPT_SOL_MAGENTA=$(PROMPT_EXT_COLOR 125)
+export PROMPT_SOL_VIOLET=$(PROMPT_EXT_COLOR 61)
+export PROMPT_SOL_BLUE=$(PROMPT_EXT_COLOR 33)
+export PROMPT_SOL_CYAN=$(PROMPT_EXT_COLOR 37)
+export PROMPT_SOL_GREEN=$(PROMPT_EXT_COLOR 64)
+export PROMPT_NO_COLOUR="\[\033[0m\]"
+
+case "${COLOR_BG_IS}" in
+  LIGHT)
+    PROMPT_SOL_EMPH=${PROMPT_SOL_BASE01}
+    PROMPT_SOL_BODY_TXT=${PROMPT_SOL_BASE00}
+    PROMPT_SOL_COMMENT=${PROMPT_SOL_BASE1}
+    ;;
+  DARK)
+    PROMPT_SOL_EMPH=${PROMPT_SOL_BASE1}
+    PROMPT_SOL_BODY_TXT=${PROMPT_SOL_BASE0}
+    PROMPT_SOL_COMMENT=${PROMPT_SOL_BASE01}
+    ;;
+    *)
+    PROMPT_SOL_EMPH=${PROMPT_SOL_BASE1}
+    PROMPT_SOL_BODY_TXT=${PROMPT_SOL_BASE0}
+    PROMPT_SOL_COMMENT=${PROMPT_SOL_BASE01}
+    ;;
+esac
+

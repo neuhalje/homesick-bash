@@ -24,17 +24,7 @@
 # Try to set the terminal colors to: http://ethanschoonover.com/solarized
 # 256 color terminals are a must.
 # MacOSX: Use iTerm2
-COLOR_BG_IS='DARK'
 
-# The color of the username in the prompt
-PROMPT_ROOT_COLOR=${SOL_RED}
-PROMPT_NON_ROOT_COLOR=${SOL_EMPH}
-
-# The color of the hostname
-PROMPT_HOST_COLOR=${SOL_EMPH}
-
-# The color of the current working directory in the prompt
-PROMPT_CWD_COLOR=${SOL_BODY_TXT}
 
 
 # courtesy of http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in

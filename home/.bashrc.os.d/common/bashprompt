@@ -1,8 +1,20 @@
 # vim: ft=sh :
+
+# The color of the username in the prompt
+PROMPT_ROOT_COLOR=${PROMPT_SOL_RED}
+PROMPT_NON_ROOT_COLOR=${PROMPT_SOL_EMPH}
+
+# The color of the hostname
+PROMPT_HOST_COLOR=${PROMPT_SOL_EMPH}
+
+# The color of the current working directory in the prompt
+PROMPT_CWD_COLOR=${PROMPT_SOL_BODY_TXT}
+
+
 function ps1_svn_prompt()
 {
 if [ -d .svn ]; then
-  local PS1_SVN=" ${SOL_GREEN}[svn: ${SOL_GREEN}$(svn info | grep ^Revision | sed s/^Revision:[\s]\*//)${SOL_GREEN}]${NO_COLOUR}"
+  local PS1_SVN=" ${PROMPT_SOL_GREEN}[svn: ${PROMPT_SOL_GREEN}$(svn info | grep ^Revision | sed s/^Revision:[\s]\*//)${PROMPT_SOL_GREEN}]${PROMPT_NO_COLOUR}"
 
   if [ $? -eq 0 ];
   then
@@ -35,15 +47,15 @@ function ps1_git_prompt()
   untracked_pattern="# Untracked files:"
   has_index_pattern="# Changes to be committed:"
 
-	  if [[  ${git_status} =~ "${has_index_pattern}" ]]; then
-	    HAS_INDEX="${SOL_YELLOW}I"
-    fi
-	  if [[  ${git_status} =~ "${untracked_pattern}" ]]; then
-	    UNTRACKED="${SOL_EMPH}?"
-    fi
-	  if [[  ${git_status} =~ "${changed_pattern_1}" ||  ${git_status} =~ "${changed_pattern_2}"  ]]; then
-	    MODIFIED_TRACKED="${SOL_RED}*"
-    fi
+  if [[  ${git_status} =~ "${has_index_pattern}" ]]; then
+    HAS_INDEX="${PROMPT_SOL_YELLOW}I"
+  fi
+  if [[  ${git_status} =~ "${untracked_pattern}" ]]; then
+    UNTRACKED="${PROMPT_SOL_EMPH}?"
+  fi
+  if [[  ${git_status} =~ "${changed_pattern_1}" ||  ${git_status} =~ "${changed_pattern_2}"  ]]; then
+    MODIFIED_TRACKED="${PROMPT_SOL_RED}*"
+  fi
 
   if [[ ${git_status} =~ ${diverge_pattern} ]]; then
     if [[ ${git_status} =~ ${diverge_remote_pattern} ]]; then
@@ -66,7 +78,7 @@ function ps1_git_prompt()
     BRANCH=${BASH_REMATCH[1]}
   fi
 
-  echo -n " ${SOL_COMMENT}[${SOL_GREEN}${BRANCH}${MODIFIED_TRACKED}${HAS_INDEX}${UNTRACKED}${SOL_BODY_TXT}${UNMERGED}${AHEAD}${SOL_COMMENT}]${NO_COLOUR}"
+  echo -n " ${PROMPT_SOL_COMMENT}[${PROMPT_SOL_GREEN}${BRANCH}${MODIFIED_TRACKED}${HAS_INDEX}${UNTRACKED}${PROMPT_SOL_BODY_TXT}${UNMERGED}${AHEAD}${PROMPT_SOL_COMMENT}]${PROMPT_NO_COLOUR}"
 }
 
 
@@ -110,13 +122,13 @@ function ps1_python_virtualenv_prompt(){
    if [ -d "$VIRTUAL_ENV" ]
    then
       VENV=$(basename $VIRTUAL_ENV)
-      echo -n "${SOL_COMMENT}(venv:${SOL_GREEN}${VENV}${SOL_COMMENT}) "
+      echo -n "${PROMPT_SOL_COMMENT}(venv:${PROMPT_SOL_GREEN}${VENV}${PROMPT_SOL_COMMENT}) "
    fi
 }
 
 function shell_colored {
-   #PS1="${LIGHT_GRAY}\h:${GRAY}\w ${LIGHT_GRAY}[$(ps1_user_name)${LIGHT_GRAY}]$(ps1_git_prompt)$(ps1_svn_prompt)${NO_COLOUR}:"
-   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)$(ps1_svn_prompt)${NO_COLOUR} "
+   #PS1="${LIGHT_GRAY}\h:${GRAY}\w ${LIGHT_GRAY}[$(ps1_user_name)${LIGHT_GRAY}]$(ps1_git_prompt)$(ps1_svn_prompt)${PROMPT_NO_COLOUR}:"
+   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)$(ps1_svn_prompt)${PROMPT_NO_COLOUR} "
 }
 PROMPT_COMMAND=shell_colored
 

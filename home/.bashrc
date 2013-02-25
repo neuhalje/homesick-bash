@@ -113,6 +113,7 @@ export HISTCONTROL=ignoreboth
 shopt -s checkwinsize
 
 # colors must be included before main
+include ".bashrc.os.d" "bgcolor"
 include ".bashrc.os.d" "colors"
 
 include ".bashrc.os.d" "main"
@@ -141,27 +142,6 @@ fi
 ##### Common
 
 alias ll="ls -la"
-
-# Colorize the Terminal
-
-case "${COLOR_BG_IS}" in
-  LIGHT)
-    SOL_EMPH=${SOL_BASE01}
-    SOL_BODY_TXT=${SOL_BASE00}
-    SOL_COMMENT=${SOL_BASE1}
-    ;;
-  DARK)
-    SOL_EMPH=${SOL_BASE1}
-    SOL_BODY_TXT=${SOL_BASE0}
-    SOL_COMMENT=${SOL_BASE01}
-    ;;
-    *)
-    echo -e ${SOL_RED}COLOR_BG_IS should be set to 'LIGHT' or 'DARK'. Actual value : \"${COLOR_BG_IS}\"
-    SOL_EMPH=${SOL_BASE1}
-    SOL_BODY_TXT=${SOL_BASE0}
-    SOL_COMMENT=${SOL_BASE01}
-    ;;
-esac
 
 # colorize the propmt
 if [ -e ~/.dir_colors ] && [ -x "$(which dircolors)" ]

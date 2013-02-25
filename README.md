@@ -66,9 +66,10 @@ The order and locations of the files are:
 
 The files included are, in the following order:
 
+* ```bgcolor```     -- *internal* set ```COLOR_BG_IS``` to either ```DARK``` or ```LIGHT```, dpendening on whether the terminal BG is light or dark
 * ```colors```      -- *internal* create color tables
 
-* ```main```        -- set ```COLOR_BG_IS``` to either ```DARK``` or ```LIGHT```, dpendening on whether the terminal BG is light or dark
+* ```main```        -- 
 * ```path```        -- Augement the path
 * ```alias```       -- Define ```alias```es.
 * ```exports```     -- Keep exports togehter
