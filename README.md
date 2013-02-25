@@ -30,6 +30,15 @@ The files included are, in the following order:
 * ```bashprompt```  -- *internal* Set up the bashprompt
 * ```screen```      -- *internal* see 'screen' below
 
+### Example
+
+On the system ```home``` which is an Ubuntu system, while sourcing ```.bashrc``` the following ```alias``` files are sourced in the following order (if they exist):
+
+1 ```~/.bashrc.os.d/common/alias```
+2 ```~/.bashrc.os.d/linux-common/alias```
+3 ```~/.bashrc.os.d/linux-debian/alias```
+4 ```~/.bashrc.home.d/alias```
+
 
 Variables
 ---------
