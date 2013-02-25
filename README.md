@@ -76,7 +76,7 @@ The files included are, in the following order:
 * ```bashprompt```  -- *internal* Set up the bashprompt
 
 ### Plugins
-Plugins AKA other castles can hook into the sourcing lifecycle by provifing a file matching the glob ```~/.bashrc-plugin.*.d```. ```.bashrc``` will source the file ```plugin.conf``` according to the rules described above.
+Plugins AKA other castles can hook into the sourcing lifecycle by providing a file matching the glob ```~/.bashrc-plugin.*.d```. ```.bashrc``` will source the file ```plugin.conf``` according to the rules described above.
 
 
 ### Example
