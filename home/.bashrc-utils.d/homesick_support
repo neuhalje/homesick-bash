@@ -35,3 +35,48 @@ function homesick_export()
     popd >/dev/null
 }
 
+
+function homesick_local_changes()
+{
+    echo Looking for local modifications in your castles...
+
+    local castle
+    local castle_path
+    local untracked
+    local changed
+
+    pushd . >/dev/null
+    for castle_path in ~/.homesick/repos/*
+    do
+        castle=$(basename $castle_path)
+        cd $castle_path
+        echo -e "${SOL_EMPH}* ${SOL_GREEN}$castle"
+
+        # dirty
+        git diff-files --quiet >/dev/null 2>&1; changed=$?
+        if test "$changed" = 0; then
+           # nothing to do
+           :
+        else
+             if test "$changed" = 1; then
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}changed ${SOL_COMMENT}files"
+            else
+                echo -e "${SOL_RED}- error from git diff-files\!"
+            fi
+        fi
+
+        # untracked
+        git ls-files --other --error-unmatch . >/dev/null 2>&1; untracked=$?
+        if test "$untracked" = 1; then
+           # nothing to do
+           :
+        else
+            if test "$untracked" = 0; then
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}untracked ${SOL_COMMENT}files"
+            else
+                echo -e "${SOL_RED}- error from ls-files\!"
+            fi
+        fi
+    done
+    popd >/dev/null
+}

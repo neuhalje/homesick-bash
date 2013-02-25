@@ -20,6 +20,22 @@ homesick symlink homesick-bash
 
 **Updating**: ```homesick_update``` automatically calls ```homesick pull``` and ```homesick symlink``` for all homesick castles in ```~/.homesick/repos/```.
 
+**Checking for local modifications**:
+
+```bash
+$  homesick_local_changes
+Looking for local modifications in your castles...
+* homesick-bash
+- there are some changed files
+* homesick-git
+* homesick-mail-base
+- there are some untracked files
+* homesick-mail-jens_home
+* homesick-screen
+* homesick-system-merkur
+* homesick-vim
+```
+
 **Copy setup no new machine**: ```homesick_export``` prints instructions to do so, e.g.
 
 ```bash
