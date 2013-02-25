@@ -5,7 +5,7 @@ umask -S u=rwx,g=rx,o= >/dev/null
 [ -z "$PS1" ] && return
 
 [ "x$BASHRC_ALREADY_CONFIGURED" = "xyes" ] && return
-export BASHRC_ALREADY_CONFIGURED="yes"
+BASHRC_ALREADY_CONFIGURED="yes"
 
 # Sometimes this is needed for UTF to work
 export LC_CTYPE="en_US.UTF-8"
