@@ -23,7 +23,7 @@ export BASHRC_HOST_CONFIG=$(uname -n|sed -e's/[.].*$//')
 
 function bashrc_debug()
 {
-     local -i DEBUG=1
+     local -i DEBUG=0
      [[ $DEBUG -eq 1 ]] &&  echo $*
 }
 

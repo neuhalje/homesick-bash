@@ -49,6 +49,10 @@ If a directory ```~/.bashrc-plugin.myplugin.d``` exists, then the following file
 3 ```~/.bashrc-plugin.myplugin.d/linux-debian/plugin.conf```
 4 ```~/.bashrc.home.d/myplugin.conf```
 
+### Debugging
+
+Logging can be enabled in ```.bashrc``` by setting ```DEBUG=1```.
+
 
 Variables
 ---------
