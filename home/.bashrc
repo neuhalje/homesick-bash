@@ -20,23 +20,23 @@ COMMON_BASHRC_PREFIX=~/.bashrc.common.d
 
 function include()
  {
-	 path=$1
+     path=$1
 
-	 local COMMON=${COMMON_BASHRC_PREFIX}/${path}
-	 if [ -e  ${COMMON} ]
-	 then
-		 . ${COMMON}
-#	 else
-#		 echo Skipping ${COMMON}
-	 fi
+     local COMMON=${COMMON_BASHRC_PREFIX}/${path}
+     if [ -e  ${COMMON} ]
+     then
+         . ${COMMON}
+#     else
+#         echo Skipping ${COMMON}
+     fi
 
-	 local LOCAL=${LOCAL_BASHRC_PREFIX}/${path}
-	 if [ -e ${LOCAL} ]
-	 then
-		 . ${LOCAL}
-#	 else
-#		 echo Skipping ${LOCAL}
-	 fi
+     local LOCAL=${LOCAL_BASHRC_PREFIX}/${path}
+     if [ -e ${LOCAL} ]
+     then
+         . ${LOCAL}
+#     else
+#         echo Skipping ${LOCAL}
+     fi
  }
 
 # don't put duplicate lines in the history. See bash(1) for more option
@@ -104,5 +104,3 @@ if [ -e ~/.dir_colors ] && [ -n "$(which dircolors)" ]
 then
     eval $(dircolors ~/.dir_colors)
 fi
-
-# test
