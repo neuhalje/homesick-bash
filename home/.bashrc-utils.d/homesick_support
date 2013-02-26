@@ -55,6 +55,7 @@ function homesick_local_changes()
     local castle_path
     local untracked
     local changed
+    local local_commits
 
     pushd . >/dev/null
     for castle_path in ~/.homesick/repos/*
@@ -74,7 +75,7 @@ function homesick_local_changes()
            :
         else
              if test "$changed" = 1; then
-                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}changed ${SOL_COMMENT}files${NO_COLOUR}"
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}changed ${SOL_COMMENT}files.${NO_COLOUR}"
             else
                 echo -e "${SOL_RED}- error from git diff-files\!${NO_COLOUR}"
             fi
@@ -92,11 +93,26 @@ function homesick_local_changes()
            :
         else
             if test "$untracked" = 0; then
-                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}untracked ${SOL_COMMENT}files${NO_COLOUR}"
+                echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}untracked ${SOL_COMMENT}files.${NO_COLOUR}"
             else
                 echo -e "${SOL_RED}- error from ls-files\!${NO_COLOUR}"
             fi
         fi
+
+        # local commits
+        local_commits=0
+        [ ! $(git rev-parse HEAD) == $(git rev-parse origin/master) ] && local_commits=1
+
+        if [[ $verbose -eq 1 && $local_commits -eq 1 ]]; then
+            git log origin/master..HEAD --oneline
+        fi
+
+        if test "$local_commits" = 1; then
+            echo -e "${SOL_COMMENT}- there are some ${SOL_EMPH}unpushed ${SOL_COMMENT}commits.${NO_COLOUR}"
+        fi
+
+
+
     done
     popd >/dev/null
 }
