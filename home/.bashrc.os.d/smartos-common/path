@@ -1,4 +1,4 @@
 ## vim: set ft=sh :
 #### SmartOS
 #export MANPATH=$MANPATH:/usr/dtrace/DTT/Man
-PATH=/opt/local/sbin:/opt/local/bin:$PATH
+PATH=/usr/bin:/usr/sbin:/opt/local/sbin:/opt/local/bin:$PATH
