@@ -1,0 +1,3 @@
+[submodule "home/.bashrc.common.d/powerline"]
+	path = home/.bashrc.common.d/powerline
+	url = git://github.com/Lokaltog/powerline.git
