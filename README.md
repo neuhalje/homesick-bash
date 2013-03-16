@@ -12,7 +12,7 @@ Usage
 Use the repo with ```homesick```: 
 
 ```bash
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-vim.git
+homesick clone ssh://git@github.com:neuhalje/homesick-bash.git
 homesick symlink homesick-bash
 ```
 
@@ -42,27 +42,25 @@ Looking for local modifications in your castles...
 $ homesick_export
 
 # homesick-bash
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-bash.git
+homesick clone ssh://git@github.com:neuhalje/homesick-bash.git
 homesick symlink homesick-bash
 
 # homesick-git
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-git.git
+homesick clone ssh://git@github.com:neuhalje/homesick-git.git
 homesick symlink homesick-git
 
 # homesick-mail-base
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-mail-base.git
+homesick clone ssh://git@github.com:neuhalje/homesick-mail-base.git
 homesick symlink homesick-mail-base
 
-# homesick-mail-jens_home
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick-private/homesick-mail-jens_home.git
-homesick symlink homesick-mail-jens_home
+# ...
 
-# homesick-screen
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-screen.git
-homesick symlink homesick-screen
+# homesick-tmux
+homesick clone ssh://git@github.com:neuhalje/homesick-tmux.git
+homesick symlink homesick-tmux
 
 # homesick-vim
-homesick clone ssh://git@www.neuhalfen.name:2222/homesick/homesick-vim.git
+homesick clone ssh://git@github.com:neuhalje/homesick-vim.git
 homesick symlink homesick-vim
 ```
 
