@@ -1,6 +1,19 @@
 # vim: set filetype=sh :
 
-alias homesickdir="cd ~/.homesick/repos/"
+
+function homesickdir()
+{
+   local homesick_dir=~/.homesick/repos
+   local optional_castle=$1
+   local optional_castle_dir="$homesick_dir/$optional_castle/home"
+
+   if [ -d  "$optional_castle_dir" ]
+   then
+     cd "$optional_castle_dir"
+   else
+     cd "$homesick_dir"
+   fi
+}
 
 function homesick_update()
 {
