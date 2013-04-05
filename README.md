@@ -6,6 +6,56 @@ This is a [homesick](https://github.com/technicalpickles/homesick) _castle_ for 
 * [Solarized](http://ethanschoonover.com/solarized) color scheme
 * Tailored for Linux, Solaris, and MacOS. Preliminary support for SmartOS
 
+Install
+------
+```bash
+cd ~
+sudo gem install homesick
+homesick clone git://github.com/neuhalje/homesick-bash.git
+
+mv .bashrc .bashrc.backup
+mv .profile .profile.backup
+
+homesick symlink homesick-bash
+
+. .bashrc
+
+# Create system specific castle
+
+homesick generate .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}
+touch .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}/home/.bashrc.${BASHRC_HOST_CONFIG}.d/path
+touch .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}/home/.bashrc.${BASHRC_HOST_CONFIG}.d/exports
+touch .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}/home/.bashrc.${BASHRC_HOST_CONFIG}.d/alias
+
+# The castle is a git repository
+cd .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}/
+
+cat <<EOF>README.md
+README
+-------
+Castle for ${BASHRC_HOST_CONFIG}. See https://github.com/neuhalje/homesick-bash for docs.
+EOF
+
+git add home/.bashrc.${BASHRC_HOST_CONFIG}.d/*
+git add README.md
+
+git commit -m"1st commit"
+
+cd -
+
+homesick symlink homesick-system-${BASHRC_HOST_CONFIG}
+
+echo Now you can add a remote (AKA backup) for your repository
+echo cd .homesick/repos/homesick-system-${BASHRC_HOST_CONFIG}
+echo git add remote origin ..
+echo git push -u origin master
+
+
+# now log out of the shell and back in to source .bashrc again with the machine specific settings.
+```
+
+
+
 Usage
 ------
 
