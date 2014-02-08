@@ -10,75 +10,36 @@ PROMPT_HOST_COLOR=${PROMPT_SOL_EMPH}
 # The color of the current working directory in the prompt
 PROMPT_CWD_COLOR=${PROMPT_SOL_BODY_TXT}
 
-
-function ps1_svn_prompt()
-{
-if [ -d .svn ]; then
-  local PS1_SVN=" ${PROMPT_SOL_GREEN}[svn: ${PROMPT_SOL_GREEN}$(svn info | grep ^Revision | sed s/^Revision:[\s]\*//)${PROMPT_SOL_GREEN}]${PROMPT_NO_COLOUR}"
-
-  if [ $? -eq 0 ];
-  then
-    echo -n ${PS1_SVN}
-  fi
-fi
-}
-
-# Returns "|unmerged:N" where N is the number of unmerged local and remote
-# branches (if any).
-function parse_git_unmerged {
-  local unmerged=`expr $(git branch --no-color -a --no-merged  2>/dev/null| wc -l)` 
-  if [ "${unmerged}" != "0" ]
-  then
-    echo "|unmerged:${unmerged}"
-  fi
-}
-
 function ps1_git_prompt()
 {
   git rev-parse --git-dir &> /dev/null || return
-# Parsing non-porcelain is not good
-  git_status="$(git status 2> /dev/null)"
-  branch_pattern="^# On branch ([^${IFS}]*)"
-  remote_pattern="# Your branch is (ahead|behind).*by ([[:digit:]]*) commit"
-  diverge_pattern="# Your branch and (.*) have diverged"
-  diverged_remote_pattern="# and have ([[:digit:]]*) and ([[:digit:]]*) different commit(s) each, respectively."
-  changed_pattern_1="# Changed but not updated:"
-  changed_pattern_2="# Changes not staged for commit:"
-  untracked_pattern="# Untracked files:"
-  has_index_pattern="# Changes to be committed:"
+  branch_pattern="^## ([^${IFS}.]*)"
+  changed_pattern="^.[MADRC]"
+  untracked_pattern="^[?]"
+  has_index_pattern="^[ADM]"
+  has_unmerged_pattern="^(.U)|^(U.)"
 
-  if [[  ${git_status} =~ "${has_index_pattern}" ]]; then
-    HAS_INDEX="${PROMPT_SOL_YELLOW}I"
-  fi
-  if [[  ${git_status} =~ "${untracked_pattern}" ]]; then
-    UNTRACKED="${PROMPT_SOL_EMPH}?"
-  fi
-  if [[  ${git_status} =~ "${changed_pattern_1}" ||  ${git_status} =~ "${changed_pattern_2}"  ]]; then
-    MODIFIED_TRACKED="${PROMPT_SOL_RED}*"
-  fi
+  while IFS= read -r -d '' line ; do
+          if [[  ${line} =~ ${has_index_pattern} ]]; then
+            HAS_INDEX="${PROMPT_SOL_YELLOW}I"
+          fi
+          if [[  ${line} =~ ${untracked_pattern} ]]; then
+            UNTRACKED="${PROMPT_SOL_EMPH}?"
+          fi
+          if [[  ${line} =~ ${changed_pattern} ]]; then
+            MODIFIED_TRACKED="${PROMPT_SOL_RED}*"
+          fi
+          if [[  ${line} =~ ${has_unmerged_pattern} ]]; then
+            UNMERGED="${PROMPT_SOL_BODY_TXT}(unmerged)"
+          fi
 
-  if [[ ${git_status} =~ ${diverge_pattern} ]]; then
-    if [[ ${git_status} =~ ${diverge_remote_pattern} ]]; then
-        AHEAD="|ahead:${BASH_REMATCH[1]}|behind:${BASH_REMATCH[2]}"
-    else
-        # in case the format has changed, at least print 'diverged'
-        AHEAD="|diverged"
-    fi
-  else # not diverged
-      if [[ ${git_status} =~ ${remote_pattern} ]]; then
-        if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-            AHEAD="|ahead:${BASH_REMATCH[2]}"
-        else
-            AHEAD="|behind:${BASH_REMATCH[2]}"
-        fi
-      fi
-  fi
+          if [[ ${line} =~ ${branch_pattern} ]]; then
+            BRANCH=${BASH_REMATCH[1]}
+          fi
+  done < <(git status --porcelain -b -z 2> /dev/null)
 
-  if [[ ${git_status} =~ ${branch_pattern} ]]; then
-    BRANCH=${BASH_REMATCH[1]}
-  fi
 
-  echo -n " ${PROMPT_SOL_COMMENT}[${PROMPT_SOL_GREEN}${BRANCH}${MODIFIED_TRACKED}${HAS_INDEX}${UNTRACKED}${PROMPT_SOL_BODY_TXT}${UNMERGED}${AHEAD}${PROMPT_SOL_COMMENT}]${PROMPT_NO_COLOUR}"
+  echo -n " ${PROMPT_SOL_COMMENT}[${PROMPT_SOL_GREEN}${BRANCH}${MODIFIED_TRACKED}${HAS_INDEX}${UNTRACKED}${PROMPT_SOL_BODY_TXT}${UNMERGED}${PROMPT_SOL_COMMENT}]${PROMPT_NO_COLOUR}"
 }
 
 
