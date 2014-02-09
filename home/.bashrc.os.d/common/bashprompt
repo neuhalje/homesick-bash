@@ -88,8 +88,7 @@ function ps1_python_virtualenv_prompt(){
 }
 
 function shell_colored {
-   #PS1="${LIGHT_GRAY}\h:${GRAY}\w ${LIGHT_GRAY}[$(ps1_user_name)${LIGHT_GRAY}]$(ps1_git_prompt)$(ps1_svn_prompt)${PROMPT_NO_COLOUR}:"
-   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)$(ps1_svn_prompt)${PROMPT_NO_COLOUR} "
+   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)${PROMPT_NO_COLOUR} "
 }
 PROMPT_COMMAND=shell_colored
 
