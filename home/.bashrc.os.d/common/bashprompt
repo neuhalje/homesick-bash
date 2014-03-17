@@ -94,14 +94,18 @@ function shell_colored {
     PS1=""
 
     if [ $EXIT -eq 0 ]; then
-        PS1+="${PROMPT_SOL_GREEN}[\!]${PROMPT_SOL_COMMENT} ";
+        PS1+="${PROMPT_SOL_GREEN}[\!] ";
     else
-        PS1+="${PROMPT_SOL_RED}[\!]${PROMPT_SOL_COMMENT} ";
+        PS1+="${PROMPT_SOL_RED}[\!] ";
     fi
 
     # if logged in via ssh shows the ip of the client
     if [ -n "$SSH_CLIENT" ]; then
-        PS1+="(${PROMPT_SOL_YELLOW}"${SSH_CLIENT%% *}"${PROMPT_SOL_COMMENT}) ";
+        local src=""
+        local dst=""
+
+        read src _ dst _ < <(echo $SSH_CONNECTION)
+        PS1+="${PROMPT_SOL_EMPH}(${PROMPT_SOL_COMMENT}$src -> ${PROMPT_SOL_YELLOW}"${dst}"${PROMPT_SOL_EMPH}) ";
     fi
 
    PS1+="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)${PROMPT_NO_COLOUR} "
