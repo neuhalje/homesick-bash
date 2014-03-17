@@ -87,8 +87,24 @@ function ps1_python_virtualenv_prompt(){
    fi
 }
 
+
 function shell_colored {
-   PS1="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)${PROMPT_NO_COLOUR} "
+    # capture the exit status of the last command
+    EXIT="$?"
+    PS1=""
+
+    if [ $EXIT -eq 0 ]; then
+        PS1+="${PROMPT_SOL_GREEN}[\!]${PROMPT_SOL_COMMENT} ";
+    else
+        PS1+="${PROMPT_SOL_RED}[\!]${PROMPT_SOL_COMMENT} ";
+    fi
+
+    # if logged in via ssh shows the ip of the client
+    if [ -n "$SSH_CLIENT" ]; then
+        PS1+="(${PROMPT_SOL_YELLOW}"${SSH_CLIENT%% *}"${PROMPT_SOL_COMMENT}) ";
+    fi
+
+   PS1+="$(ps1_python_virtualenv_prompt)$(ps1_user_name)${PROMPT_SOL_COMMENT}@${PROMPT_HOST_COLOR}\h${PROMPT_SOL_COMMENT}:${PROMPT_CWD_COLOR}\w$(ps1_git_prompt)${PROMPT_NO_COLOUR} "
 }
 PROMPT_COMMAND=shell_colored
 
