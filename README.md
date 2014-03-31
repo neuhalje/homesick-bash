@@ -6,6 +6,10 @@ _This is a [homesick](https://github.com/technicalpickles/homesick) castle for [
 Like many long term users of Linux/Unix/Mac, I have grown a fair amount of dot-files (```.vimrc```, ```.bashrc```, ```.muttrc```, ...) over the time. Each tailored to my specific needs, e.g with a ```git``` enabled prompt, and custom colours. 
 
 ![*Linux* My bashprompt in xubuntu. Showing exit codes for ok, abort, command not found, and permisison denied. Also shows changes in git repositories. ](ubuntu.png)
+*Linux*
+
+![*MacOSC*](macosx.png)
+*MacOS X*
 
 As long, as there was only one (main) machine, this was good and well. As the complexity of the dotfiles grew, so did the number of machines/virtual machines I wanted these settings to be used on. I started copying over files. Then I switched to plain git to keep the history, and to rollback changes.  Later I switched to [homesick](https://github.com/technicalpickles/homesick).
 
