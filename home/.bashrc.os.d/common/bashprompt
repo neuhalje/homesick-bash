@@ -87,17 +87,42 @@ function ps1_python_virtualenv_prompt(){
    fi
 }
 
+function exit_code_prompt {
+    EXIT="$1"
+
+    # Exit codes: http://www.tldp.org/LDP/abs/html/exitcodes.html
+    # Smileys: http://en.wikipedia.org/wiki/Emoji#OS_X_Lion
+    local SMILEY="☺"
+    local CHECKMARK="✔"
+    local CROSS="✖"
+    local FEARFULL="😱"
+    local UNHAPPY="😞"
+    local FIST="✊"
+    local VOLTAGE="⚡"
+
+    case "$EXIT" in
+     0) echo -n "${PROMPT_SOL_GREEN}$CHECKMARK ";
+        ;;
+     1) echo -n "${PROMPT_SOL_RED}$UNHAPPY [$EXIT] "; # 1 - Catchall for general errors
+        ;;
+     2) echo -n "${PROMPT_SOL_RED}$UNHAPPY [$EXIT] "; # 2 - Misuse of shell builtins (according to Bash documentation)
+        ;;
+     126) echo -n "${PROMPT_SOL_YELLOW}$CROSS "; # 126 - Command invoked cannot execute
+        ;;
+     127) echo -n "${PROMPT_SOL_YELLOW}? "; # 127 - "command not found"
+        ;;
+     130) echo -n "${PROMPT_SOL_YELLOW}$VOLTAGE "; # 130  Script terminated by Control-C
+        ;;
+     *) echo -n "${PROMPT_SOL_RED}$FEARFULL [$EXIT] ";
+        ;;
+    esac
+}
 
 function shell_colored {
     # capture the exit status of the last command
     EXIT="$?"
-    PS1=""
+    PS1=$(exit_code_prompt $EXIT)
 
-    if [ $EXIT -eq 0 ]; then
-        PS1+="${PROMPT_SOL_GREEN}[\!] ";
-    else
-        PS1+="${PROMPT_SOL_RED}[\!] ";
-    fi
 
     # if logged in via ssh shows the ip of the client
     if [ -n "$SSH_CLIENT" ]; then
