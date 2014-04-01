@@ -92,13 +92,15 @@ function exit_code_prompt {
 
     # Exit codes: http://www.tldp.org/LDP/abs/html/exitcodes.html
     # Smileys: http://en.wikipedia.org/wiki/Emoji#OS_X_Lion
+    local bold=`tput bold`
+    local normal=`tput sgr0`
     local SMILEY="☺"
     local CHECKMARK="✔"
     local CROSS="✖"
     local FEARFULL="😱"
-    local UNHAPPY="😞"
-    local FIST="✊"
+    local UNHAPPY="${bold}☹${normal}"
     local VOLTAGE="⚡"
+    local SKULL="${bold}☠${normal}"
 
     case "$EXIT" in
      0) echo -n "${PROMPT_SOL_GREEN}$CHECKMARK ";
@@ -111,7 +113,13 @@ function exit_code_prompt {
         ;;
      127) echo -n "${PROMPT_SOL_YELLOW}? "; # 127 - "command not found"
         ;;
-     130) echo -n "${PROMPT_SOL_YELLOW}$VOLTAGE "; # 130  Script terminated by Control-C
+     130) echo -n "${PROMPT_SOL_YELLOW}$VOLTAGE "; # 130  SIGINT Script terminated by Control-C
+        ;;
+     131) echo -n "${PROMPT_SOL_RED}[QUIT]$SKULL "; # SIGQUIT
+        ;;
+     137) echo -n "${PROMPT_SOL_RED}[KILL]$SKULL "; # SIGKILL
+        ;;
+     148) echo -n "${PROMPT_SOL_GREEN}zZ "; # Ctrl-Z
         ;;
      *) echo -n "${PROMPT_SOL_RED}$FEARFULL [$EXIT] ";
         ;;
