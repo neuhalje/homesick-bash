@@ -119,6 +119,8 @@ function exit_code_prompt {
         ;;
      137) echo -n "${PROMPT_SOL_RED}[KILL]$SKULL "; # SIGKILL
         ;;
+     143) echo -n "${PROMPT_SOL_YELLOW}[TERM]$SKULL "; # SIGTERM
+        ;;
      148) echo -n "${PROMPT_SOL_GREEN}zZ "; # Ctrl-Z
         ;;
      *) echo -n "${PROMPT_SOL_RED}$FEARFULL [$EXIT] ";
