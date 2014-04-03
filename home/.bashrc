@@ -37,6 +37,7 @@ function include_plugin()
      local path=$2
 
      local COMMON_BASHRC_PREFIX=~/${plugin_dir_name}/common
+     local BASHRC_PREFIX=~/${plugin_dir_name}/${BASHRC_OS}-common
      local DISTRO_BASHRC_PREFIX=~/${plugin_dir_name}/${BASHRC_OS}-${BASHRC_OS_DISTRO}
 
 
@@ -46,6 +47,22 @@ function include_plugin()
      then
          bashrc_debug include ${COMMON}
          . ${COMMON}
+     fi
+
+     #  plugin os common
+     local BASHRC=${BASHRC_PREFIX}/${path}
+     if [ -e  ${BASHRC} ]
+     then
+         bashrc_debug include ${BASHRC}
+         . ${BASHRC}
+     fi
+
+     # plugin os distro
+     local DISTRO_BASHRC=${DISTRO_BASHRC_PREFIX}/${path}
+     if [ -e  ${DISTRO_BASHRC} ]
+     then
+         bashrc_debug include ${DISTRO_BASHRC}
+         . ${DISTRO_BASHRC}
      fi
 
      # OS
