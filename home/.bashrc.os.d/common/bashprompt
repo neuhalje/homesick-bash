@@ -13,10 +13,10 @@ PROMPT_CWD_COLOR=${PROMPT_SOL_BODY_TXT}
 function ps1_git_prompt()
 {
   git rev-parse --git-dir &> /dev/null || return
-  branch_pattern="^## ([^${IFS}.]*)"
+  branch_pattern="^## ([^${IFS}]*)"
   changed_pattern="^.[MADRC]"
   untracked_pattern="^[?]"
-  has_index_pattern="^[ADM]"
+  has_index_pattern="^[ADMR]"
   has_unmerged_pattern="^(.U)|^(U.)"
 
   while IFS= read -r -d '' line ; do
