@@ -7,7 +7,7 @@
 which virtualenv >/dev/null
 if [[ 0 -eq $? ]]
     then
-        for candidate in /usr/bin/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh
+        for candidate in /usr/bin/virtualenvwrapper.sh /usr/local/bin/virtualenvwrapper.sh /usr/local/bin/pyenv-virtualenvwrapper
         do
             if [ -f "$candidate" ]
             then
