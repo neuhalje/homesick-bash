@@ -120,6 +120,7 @@ include ".bashrc.os.d" "main"
 include ".bashrc.os.d" "path"
 include ".bashrc.os.d" "alias"
 include ".bashrc.os.d" "exports"
+include ".bashrc.os.d" "man"
 
 include ".bashrc.os.d" "bashprompt"
 
