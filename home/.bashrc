@@ -149,3 +149,5 @@ if [ -e ~/.dir_colors ] && [ -x "$(which dircolors)" ]
 then
     eval $(dircolors ~/.dir_colors)
 fi
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
